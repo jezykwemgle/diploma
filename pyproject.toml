@@ -1,0 +1,37 @@
+[tool.black]
+target-version = ['py311']
+line-length = 79
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    |
+    | venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+    | src/manage\.py
+    | src/core/settings\.py
+    | src/core/wsgi\.py
+    | src/core/asgi\.py
+    | src/core/urls\.py
+)
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+skip = '.venv,venv,env,migrations, settings.py, asgi.py, wsgi.py, manage.py'
+src_paths = ["src"]
