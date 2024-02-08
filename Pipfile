@@ -4,7 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
+django = "5.0.2"
+crispy = "*"
+crispy-bootstrap5 = "*"
 
 [dev-packages]
 black = "*"

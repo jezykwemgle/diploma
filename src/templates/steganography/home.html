@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+<title>{% block title %}Home{% endblock %}</title>
+
+{% block content %}
+    <h1>Welcome to y StegaLog!</h1>
+    <p>This is the home page.</p>
+<div>
+    {% if user.is_authenticated %}
+
+    <a href="{% url 'steganography:encoding' %}">Encode image</a>
+    <a href="{% url 'steganography:decoding' %}">Decode image</a>
+
+    {% else %}
+
+
+    {% endif %}
+</div>
+{% endblock %}
