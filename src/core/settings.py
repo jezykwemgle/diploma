@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +42,9 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
 
-    "steganography.apps.SteganographyConfig"
+    "steganography.apps.SteganographyConfig",
+    "users.apps.UsersConfig",
+    "authentication.apps.AuthenticationConfig"
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -129,3 +133,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "users.User"
+
+# Redirect user after success login
+LOGIN_REDIRECT_URL = reverse_lazy("steganography:home")
+LOGIN_URL = reverse_lazy("accounts:login")
