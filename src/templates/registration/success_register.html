@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+<title>{% block title %}Success{% endblock %}</title>
+
+{% block content %}
+    <h2>You have successful verification. Please login <a href="{% url 'auth:login' %}">here</a>.</h2>
+{% endblock %}
