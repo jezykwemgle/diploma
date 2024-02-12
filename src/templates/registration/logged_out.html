@@ -2,7 +2,8 @@
 <title>{% block title %}Logout{% endblock %}</title>
 
 {% block content %}
-     <p>Logged out!</p>
-
-  <a href="{% url 'auth:login' %}">Click here to login again.</a>
+    <div class="container-fluid pt-md-5">
+        <p class="h2">Logged out!</p>
+        <p class="h5 pt-3">Click<a href="{% url 'auth:login' %}"> here </a>to login again.</p>
+    </div>
 {% endblock %}

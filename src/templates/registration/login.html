@@ -1,13 +1,27 @@
 {% extends 'base.html' %}
-<title>{% block title %}Login{% endblock %}</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/style.css' %}">
+{% block title %}Login{% endblock %}
 
 {% block content %}
-<form method="POST" novalidate>
-	{% csrf_token %}
-	<h2>Login</h2>
-	{{form.as_p}}
-	<input type="submit" value="Login" />
-	<p>Don't have an account? <a href="{% url 'auth:registration' %}">Register</a></p>
-</form>
-
-{% endblock content%}
+<div class="container-fluid pt-md-5 d-flex justify-content-center align-items-center">
+    <form method="POST" class="for border border-primary rounded p-5" action="{% url 'auth:login' %}">
+        {% csrf_token %}
+        <h2 class="text-center">Login</h2>
+        <div class="container-fluid">
+            <div data-mdb-input-init class="form-outline mb-2">
+                <label for="form1Example1"></label>
+                <input type="email" id="form1Example1" name="username" class="form-control" placeholder="Email address"/>
+            </div>
+            <div data-mdb-input-init class="form-outline mb-2">
+                <label for="form1Example2"></label>
+                <input type="password" id="form1Example2" name="password" class="form-control" placeholder="Password"/>
+            </div>
+        </div>
+        <div class="container-fluid text-center pt-2">
+            <button type="submit" class="btn btn-success btn-block">Login</button>
+            <p class="pt-3">Don't have an account? <a href="{% url 'auth:registration' %}">Register</a></p>
+        </div>
+    </form>
+</div>
+{% endblock content %}

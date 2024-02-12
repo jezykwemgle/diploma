@@ -10,7 +10,7 @@ class RegistrationForm(UserCreationForm):
     """
 
     class Meta:
-        model = User()
+        model = User
         fields = [
             "username",
             "first_name",
