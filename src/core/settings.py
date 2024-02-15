@@ -142,4 +142,10 @@ AUTH_USER_MODEL = "users.User"
 
 # Redirect user after success login
 LOGIN_REDIRECT_URL = reverse_lazy("steganography:home")
-LOGIN_URL = reverse_lazy("accounts:login")
+LOGIN_URL = reverse_lazy("auth:login")
+
+# Session set up
+SESSION_COOKIE_AGE = 60
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
