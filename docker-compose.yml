@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    image: diploma
+    container_name: diploma_app
+    volumes:
+      - "./:/app/"
+    ports:
+      - "8888:8000"
