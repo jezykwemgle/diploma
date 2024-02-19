@@ -2,8 +2,10 @@ from django.contrib.auth import get_user_model, logout
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
-from authentication.forms import RegistrationForm
 from users.models import ActivationKey
+from users.tasks import send_activation_email, send_response_email
+
+from .forms import RegistrationForm
 
 User = get_user_model()
 
@@ -23,13 +25,10 @@ def signup(request):
             user.is_active = False
             user.save()
             activation_key = ActivationKey.objects.create(user=user)
-            print(  # noqa
-                reverse_lazy(
-                    "user:activate",
-                    kwargs={"activation_key": activation_key.key},
-                )
-            )
-            return redirect(reverse_lazy("auth:success"))
+
+            send_activation_email(user.email, activation_key)
+
+            return redirect(reverse_lazy("auth:success-registration"))
         else:
             return render(
                 request, "registration/register.html", {"form": form}
@@ -46,7 +45,8 @@ def activate_user(request, activation_key):
         user.is_active = True
         user.save()
         activation_obj.delete()
-        return redirect(reverse_lazy("auth:success"))
+        send_response_email(user.email)
+        return redirect(reverse_lazy("auth:success-activation"))
     except ActivationKey.DoesNotExist:
         return redirect(reverse_lazy("user:activation_key_not_found"))
     except User.DoesNotExist:
@@ -67,10 +67,15 @@ def user_not_found(request):
     return render(request, "registration/user_not_found.html")
 
 
-def success(request):
+def success_activation(request):
     """
     View to redirect user to login page.
     """
+    return render(request, "registration/success_activation.html")
+
+
+def success_register(request):
+    """ """
     return render(request, "registration/success_register.html")
 
 
