@@ -4,6 +4,20 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+    <div class="mt-1 mb-2">
+    {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>Oops! Something went wrong:</strong>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
 <div class="container-fluid pt-md-5 d-flex justify-content-center align-items-center">
     <form method="POST" class="for border border-primary rounded p-5" action="{% url 'auth:login' %}">
         {% csrf_token %}
