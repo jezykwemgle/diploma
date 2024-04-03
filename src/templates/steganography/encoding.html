@@ -2,5 +2,23 @@
 <title>{% block title %}Home{% endblock %}</title>
 
 {% block content %}
-    <h1>{{ info }}</h1>
+     {% if not processed_photo_url %}
+        <h2>Decoding Form</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
+    {% if processed_photo_url %}
+        <h2>Processed Photo</h2>
+        <img src="{{ processed_photo_url }}" alt="Processed Photo">
+        <form method="post" action="{% url 'steganography:save_photo' %}">
+            {% csrf_token %}
+            <input type="hidden" name="photo_data" value="{{ processed_photo_data }}">
+            <button class="btn-primary" type="submit" name="action" value="save">Save Photo</button>
+            <button class="btn-primary" type="submit" name="action" value="email">Send with Email</button>
+            <button class="btn-primary" type="submit" name="action" value="zip">Save in Zipfile</button>
+        </form>
+    {% endif %}
 {% endblock %}
