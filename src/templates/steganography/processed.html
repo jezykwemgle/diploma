@@ -2,5 +2,9 @@
 <title>{% block title %}Home{% endblock %}</title>
 
 {% block content %}
-    <img src="{{ processed_photo_url  }}" alt="Processed Photo">
+    <form method="post" action="{% url 'save_photo' %}">
+        {% csrf_token %}
+        <input type="hidden" name="photo_data" value="{{ processed_photo_data }}">
+        <button type="submit" name="action" value="save">Завантажити фотографію</button>
+    </form>
 {% endblock %}

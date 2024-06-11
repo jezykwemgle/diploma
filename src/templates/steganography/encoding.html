@@ -1,24 +1,64 @@
 {% extends 'base.html' %}
-<title>{% block title %}Home{% endblock %}</title>
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Encryption{% endblock %}
 
 {% block content %}
-     {% if not processed_photo_url %}
-        <h2>Decoding Form</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
+<div class="mt-1 mb-2">
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Oops! Something went wrong:</strong>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
     {% endif %}
-    {% if processed_photo_url %}
-        <h2>Processed Photo</h2>
-        <img src="{{ processed_photo_url }}" alt="Processed Photo">
+</div>
+<div class="container mt-5">
+    <h2 class="text-center">Encryption Form</h2>
+    <div class="card w-50 mx-auto custom-bg-color-dark-transparent custom-card-height py-5">
+        <div class="card-body d-flex flex-column justify-content-between">
+            <form method="post" enctype="multipart/form-data" class="form-row" id="encryptionForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.photo|add_class:'form-control-file' }}
+                </div>
+                <div class="mb-3">
+                    {{ form.message|add_class:'form-control custom-text-field' }}
+                </div>
+                {% if not photo_data %}
+                <div class="text-center">
+                    <button class="btn custom-bg-color-dark" type="submit">Submit</button>
+                    <div id="loadingSpinner" style="display:none;">
+                        <img class="mt-2" src="{% static 'images/loading.gif' %}" alt="Loading...">
+                    </div>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    {% if photo_data %}
+    <div class="container mt-5 text-center">
+        <p>Your secret is safe now :) You can download it below:</p>
         <form method="post" action="{% url 'steganography:save_photo' %}">
             {% csrf_token %}
-            <input type="hidden" name="photo_data" value="{{ processed_photo_data }}">
-            <button class="btn-primary" type="submit" name="action" value="save">Save Photo</button>
-            <button class="btn-primary" type="submit" name="action" value="email">Send with Email</button>
-            <button class="btn-primary" type="submit" name="action" value="zip">Save in Zipfile</button>
+            <input type="hidden" name="photo_data" value="{{ photo_data }}">
+            <button class="btn custom-bg-color-dark" type="submit" name="action" value="save">Save Photo</button>
+            <button class="btn custom-bg-color-dark" type="submit" name="action" value="email">Send with Email</button>
+            <button class="btn custom-bg-color-dark" type="submit" name="action" value="zip">Save in Zipfile</button>
         </form>
+    </div>
     {% endif %}
+</div>
+<script>
+document.getElementById('encryptionForm').onsubmit = function() {
+    document.getElementById('loadingSpinner').style.display = 'block';
+    return true;
+};
+</script>
 {% endblock %}

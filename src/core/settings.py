@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     "crispy_forms",
     "crispy_bootstrap5",
+    "django_celery_results",
 
     "steganography.apps.SteganographyConfig",
     "users.apps.UsersConfig",
@@ -79,6 +80,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            'libraries': {
+                'custom_filters': 'templatetags.custom_filters',
+            }
         },
     },
 ]
@@ -155,13 +159,25 @@ LOGIN_URL = reverse_lazy("auth:login")
 # Session set up
 SESSION_COOKIE_AGE = 60
 SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'anastasiafabricnaama@gmail.com'
+# EMAIL_HOST_PASSWORD = 'leic ncwf earf jroy'
+# EMAIL_PORT = 587
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6397'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "127.0.0.1"
+EMAIL_PORT = 1025
+
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6397'
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'Europe/Kyiv'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760

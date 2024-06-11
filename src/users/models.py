@@ -20,6 +20,9 @@ class User(AbstractUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 
+    two_factor_code = models.CharField(max_length=6, blank=True, null=True)
+    code_sent_time = models.DateTimeField(blank=True, null=True)
+
     objects = UserManager()
 
     EMAIL_FIELD = "email"

@@ -29,3 +29,9 @@ class RegistrationForm(UserCreationForm):
                 "The two password fields didn't match."
             )
         return password2
+
+
+class CombinedLoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+    two_factor_code = forms.CharField(max_length=6, required=False)

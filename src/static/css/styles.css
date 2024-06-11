@@ -1,0 +1,23 @@
+.custom-bg-color-light-transparent {
+    background-color: rgb(191, 198, 222);
+}
+.custom-bg-color-dark-transparent {
+    background-color: rgb(153, 163, 202);
+}
+.custom-bg-color-dark {
+    background-color: rgb(91, 109, 172);
+}
+.custom-bg-color-text {
+    border-color: rgb(91, 109, 172);
+}
+
+.custom-card-height {
+    min-height: 400px; /* Задайте бажану мінімальну висоту */
+}
+
+.custom-text-field {
+    width: 100%;      /* Забезпечує, що поле розтягується на всю ширину контейнера */
+    height: 100px;    /* Встановлює висоту поля */
+    font-size: 16px;  /* Збільшує розмір шрифту */
+    padding: 10px;    /* Додає внутрішні відступи для кращого читання */
+}

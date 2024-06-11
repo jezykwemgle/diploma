@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
-<title>{% block title %}Home{% endblock %}</title>
+
+{% block title %}Home{% endblock %}
 
 {% block content %}
-    <div class="container pt-5">
-        <p class="h1">Welcome to y StegaLog!</p>
-        <p class="h3">This is the home page.</p>
-        {% if user.is_authenticated %}
-            <div class="container-fluid pt-md-5">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a class="btn btn-outline-dark" href="{% url 'steganography:encoding' %}">Encode image</a></li>
-                    <li class="list-group-item"><a class="btn btn-outline-dark" href="{% url 'steganography:decoding' %}">Decode image</a></li>
-                </ul>
-            </div>
-        {% endif %}
+<div class="container mt-5">
+    <h1 class="display-3 text-center">Welcome to StegaLog!</h1>
+    <p class="lead text-center">This is the home page where you can start your journey with us.</p>
+
+    {% if user.is_authenticated %}
+    <div class="text-center mt-4">
+        <a class="btn custom-bg-color-dark btn-lg" href="{% url 'steganography:encoding' %}" role="button">Encode Image</a>
+        <a class="btn custom-bg-color-dark-transparent" href="{% url 'steganography:decoding' %}" role="button">Decode Image</a>
     </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -20,7 +20,6 @@ class UserManager(BaseUserManager):
     ):
         extra_fields["is_staff"] = False
         extra_fields["is_superuser"] = False
-        # extra_fields["is_active"] = True
 
         return self._create_user(email, password, **extra_fields)
 
@@ -29,5 +28,6 @@ class UserManager(BaseUserManager):
     ):
         extra_fields["is_staff"] = True
         extra_fields["is_superuser"] = True
+        extra_fields["is_active"] = True
 
         return self._create_user(email, password, **extra_fields)

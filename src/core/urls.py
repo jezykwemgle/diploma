@@ -22,7 +22,7 @@ from core import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("steganography.urls"), name="steganography"),
+    path("image/", include("steganography.urls"), name="steganography"),
     path("auth/", include("authentication.urls")),
     path("user/", include("users.urls"))
 ]
